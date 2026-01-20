@@ -103,12 +103,14 @@ trim parse data.xlsx -h "B1:E2"
 
 
 实际例子
-- `trim parse .\.trash\test_input\1-JTCBB_CBB04矿山企业产品综合成本构成表.xlsx -h "D3:U4" -v "A6:B25" -p .\.trash\ -m`
-- `trim parse .\.trash\test_input\2-JTCBB_CBB02矿山作业成本项目构成表.xlsx -h "C3:Z4" -v "A6:A61" -p .\.trash\ -m`
-- `trim parse .\.trash\test_input\3-JTCBB_CBB03矿山成本要素表.xlsx -h "C3:P4" -v "A6:A58" -p .\.trash\ -m`
-- `trim parse .\.trash\test_input\4-JTCBB_CBB05矿山企业制造费用明细表.xlsx -h "C3:R5" -v "A7:A64" -p .\.trash\ -m`
-- `trim parse .\.trash\test_input\5-JTCBB_CBB07定额材料、动力消耗统计表.xlsx -h "F3:AA4" -v "A6:B52" -p .\.trash\ -m`
-
+```bash
+trim parse .\.trash\1-JTCBB_CBB04矿山企业产品综合成本构成表.xlsx -h "D3:U4" -v "A6:B25" -p .\.trash\ -t 2512 -m
+trim parse .\.trash\test_input\2-JTCBB_CBB02矿山作业成本项目构成表.xlsx -h "C3:Z4" -v "A6:A61" -p .\.trash\ -t 2512 -m
+trim parse .\.trash\2-JTCBB_CBB02矿山作业成本项目构成表.xlsx -h "C3:Z4" -v "A6:A61" -p .\.trash\ -t 2512 -m
+trim parse .\.trash\3-JTCBB_CBB03矿山成本要素表.xlsx -h "C3:P4" -v "A6:A58" -p .\.trash\ -t 2512 -m
+trim parse .\.trash\4-JTCBB_CBB05矿山企业制造费用明细表.xlsx -h "C3:R5" -v "A7:A64" -p .\.trash\ -t 2512 -m
+trim parse .\.trash\5-JTCBB_CBB07定额材料、动力消耗统计表.xlsx -h "F3:AA4" -v "A6:B52" -p .\.trash\ -t 2512 -m
+```
 
 ## 项目结构
 

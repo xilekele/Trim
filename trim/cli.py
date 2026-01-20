@@ -34,10 +34,17 @@ def info(file_path: str, json: bool):
 @click.option("-v", "--vaxis", help="行标题范围，如 A2:B10")
 @click.option("-p", "--path", "output_dir", default=".", help="输出目录")
 @click.option("-m", "--merge", is_flag=True, help="合并模式：sheet名作为行标题，列标题格式为 原行标题|原列标题")
-def parse(file_path: str, haxis: str, vaxis: str, output_dir: str, merge: bool):
+@click.option("-t", "--timestamp", default=None, help="合并模式：时间戳值，如 -t 2512")
+def parse(file_path: str, haxis: str, vaxis: str, output_dir: str, merge: bool, timestamp: str):
     """多表格文件解析，并生成csv文件
     
     FILE_PATH: Excel文件路径
+    
+    合并模式说明：
+    - 第一列：企业名称（从sheet名字解析，格式为 公司名称(括号内容)）
+    - 第二列：会计期间（配合 -t/--timestamp 参数使用）
+    - 第三列：报表类型（括号内容，默认为"本部"）
+    - 合并后每个sheet一行数据
     """
     output_dir = Path(output_dir)
     click.echo(f"解析文件: {file_path}")
@@ -48,6 +55,8 @@ def parse(file_path: str, haxis: str, vaxis: str, output_dir: str, merge: bool):
         click.echo(f"行标题范围: {vaxis}")
     if merge:
         click.echo("合并模式: sheet名作为行标题，列标题格式为 原行标题|原列标题")
+    if timestamp:
+        click.echo("时间戳模式：标记第二列内容")
     
     output_files = parse_excel_with_axis(
         file_path,
@@ -55,6 +64,7 @@ def parse(file_path: str, haxis: str, vaxis: str, output_dir: str, merge: bool):
         haxis=haxis,
         vaxis=vaxis,
         merge=merge,
+        timestamp=timestamp,
     )
     
     click.echo(f"\n生成 {len(output_files)} 个文件:")

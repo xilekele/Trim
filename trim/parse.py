@@ -97,12 +97,52 @@ def _get_merged_cell_value(ws, row: int, col: int, strip=True):
     return val
 
 
+# 括号内容到字母缩写的映射
+BRACKET_CONTENT_MAP = {
+    "本部": "BB",
+    "管理": "GL",
+    "差额": "CE",
+    "合并": "HB",
+}
+
+
+def parse_sheet_name(sheet_name: str) -> Tuple[str, str]:
+    """解析sheet名字，提取公司名称和括号内容
+    
+    Args:
+        sheet_name: sheet名字，格式如 "公司名称(括号内容)" 或 "公司名称（括号内容）"
+    
+    Returns:
+        (公司名称, 括号内容缩写)，括号内容默认为"BB"
+    """
+    # 匹配 名称(内容) 或 名称（内容） 格式
+    match = re.match(r'^(.+?)（(.+?)）$', sheet_name.strip())
+    if match:
+        company = match.group(1).strip()
+        bracket_content = match.group(2).strip()
+    else:
+        # 尝试匹配英文括号
+        match = re.match(r'^(.+?)\(([^)]+)\)$', sheet_name.strip())
+        if match:
+            company = match.group(1).strip()
+            bracket_content = match.group(2).strip()
+        else:
+            # 没有括号，整个名称为公司名称
+            company = sheet_name.strip()
+            bracket_content = "本部"
+    
+    # 转换为字母缩写
+    bracket_code = BRACKET_CONTENT_MAP.get(bracket_content, "BB")
+    return company, bracket_code
+
+
 def parse_excel_with_axis(
     file_path: str,
     output_dir: str = ".",
     haxis: Optional[str] = None,
     vaxis: Optional[str] = None,
     merge: bool = False,
+    timestamp: Optional[str] = None,
 ) -> List[str]:
     """使用行列轴解析Excel文件
     
@@ -111,7 +151,8 @@ def parse_excel_with_axis(
         output_dir: 输出目录
         haxis: 列标题范围，如 "B1:H2"
         vaxis: 行标题范围，如 "A2:B10"
-        merge: 是否合并模式（所有sheet合并到一个文件，sheet名作为行标识）
+        merge: 是否合并模式（所有sheet合并到一个文件）
+        timestamp: 时间戳值，直接使用传入的字符串
     
     Returns:
         导出的CSV文件路径列表
@@ -209,34 +250,46 @@ def parse_excel_with_axis(
             # 创建DataFrame
             if merge:
                 # 合并模式：每个sheet一行数据
-                # 每行数据是一个成本项目，每列是一个指标
-                # 列标题格式：行标题|列标题
+                # 解析sheet名字
+                company, bracket_content = parse_sheet_name(sheet_name)
+                
                 num_data_rows = len(data)
                 num_data_cols = len(data[0]) if data else 0
                 
                 # 构建新的列标题：行标题|列标题
                 new_col_headers = []
-                for row_idx in range(num_data_rows):
+                for row_idx in range(num_data_rows):  # 从第一行开始
                     row_header = row_headers[row_idx] if row_headers and row_idx < len(row_headers) else f"Row_{row_idx}"
-                    for col_idx in range(num_data_cols):
+                    for col_idx in range(num_data_cols):  # 从第一列开始
                         col_header = merged_col_headers[col_idx] if col_idx < len(merged_col_headers) else f"Col_{col_idx}"
                         new_col_header = f"{row_header}|{col_header}"
                         new_col_headers.append(new_col_header)
                 
-                # 构建行数据：每列对应一个单元格值（第一个非空值）
+                # 构建行数据
                 row_data = []
                 for row_idx in range(num_data_rows):
                     for col_idx in range(num_data_cols):
                         val = None
-                        for r_idx in range(row_idx, row_idx + 1):  # 只取对应行的值
-                            v = data[r_idx][col_idx] if col_idx < len(data[r_idx]) else None
-                            if v is not None and not pd.isna(v):
-                                val = v
-                                break
+                        v = data[row_idx][col_idx] if col_idx < len(data[row_idx]) else None
+                        if v is not None and not pd.isna(v):
+                            val = v
                         row_data.append(val)
                 
+                # 创建DataFrame
                 df = pd.DataFrame([row_data], columns=new_col_headers)
-                df.insert(0, "sheet_name", sheet_name)
+                
+                # 添加时间戳（直接使用传入的时间戳字符串）
+                if timestamp is not None:
+                    df.insert(0, "会计期间", timestamp)
+                else:
+                    df.insert(0, "会计期间", "")
+                
+                # 添加括号内容作为第三列
+                df.insert(0, "报表类型", bracket_content)
+                
+                # 添加公司名称作为第一列
+                df.insert(0, "企业名称", company)
+                
                 all_dfs.append(df)
             else:
                 # 普通模式：每个sheet一个文件
