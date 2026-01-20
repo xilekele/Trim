@@ -1,6 +1,7 @@
 """trim parse 命令 - 多表格文件解析"""
 
 import re
+import warnings
 from pathlib import Path
 from typing import Optional, Tuple, List
 import pandas as pd
@@ -254,7 +255,9 @@ def parse_excel_with_axis(
         
         # 合并模式：导出合并后的文件
         if merge and all_dfs:
-            merged_df = pd.concat(all_dfs, ignore_index=True)
+            with warnings.catch_warnings():
+                warnings.filterwarnings("ignore", category=FutureWarning)
+                merged_df = pd.concat(all_dfs, ignore_index=True)
             safe_file_name = re.sub(r'[\\/*?:"<>|]', "_", Path(file_path).stem)
             output_path = exporter.export(merged_df, f"{safe_file_name}_merged.csv")
             output_files.append(output_path)

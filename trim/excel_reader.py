@@ -1,5 +1,6 @@
 """Excel文件读取工具"""
 
+import warnings
 from pathlib import Path
 from typing import List, Dict, Any, Optional, Tuple
 import openpyxl
@@ -18,7 +19,9 @@ class ExcelReader:
         """加载Excel工作簿"""
         if not self.file_path.exists():
             raise FileNotFoundError(f"文件不存在: {self.file_path}")
-        self.workbook = openpyxl.load_workbook(self.file_path, data_only=True)
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=UserWarning, module="openpyxl")
+            self.workbook = openpyxl.load_workbook(self.file_path, data_only=True)
     
     def get_sheet_names(self) -> List[str]:
         """获取所有sheet名称"""
