@@ -105,11 +105,11 @@ trim parse data.xlsx -h "B1:E2"
 
 实际例子
 ```bash
-trim parse .\.trash\1-JTCBB_CBB04矿山企业产品综合成本构成表.xlsx -h "D3:U4" -v "A6:B25" -p .\.trash\ -n "CBGC" -t 202512 -m
-trim parse .\.trash\2-JTCBB_CBB02矿山作业成本项目构成表.xlsx -h "C3:Z4" -v "A6:A61" -p .\.trash\ -n "KSZYGC" -t 202512 -m
-trim parse .\.trash\3-JTCBB_CBB03矿山成本要素表.xlsx -h "C3:P4" -v "A6:A58" -p .\.trash\ -n "KSYS" -t 202512 -m
-trim parse .\.trash\4-JTCBB_CBB05矿山企业制造费用明细表.xlsx -h "C3:R5" -v "A7:A64" -p .\.trash\ -n "KSZZFY" -t 202512 -m
-trim parse .\.trash\5-JTCBB_CBB07定额材料、动力消耗统计表.xlsx -h "F3:AA4" -v "A6:B52" -p .\.trash\ -n "DEXH" -t 202512 -m
+trim parse .trash\1-JTCBB_CBB04矿山企业产品综合成本构成表.xlsx -h "D3:U4" -v "A6:B25" -p .\.trash\ -n "CBGC" -t 202601 -m
+trim parse .trash\2-JTCBB_CBB02矿山作业成本项目构成表.xlsx -h "C3:Z4" -v "A6:A61" -p .\.trash\ -n "KSZYGC" -t 202601 -m
+trim parse .trash\3-JTCBB_CBB03矿山成本要素表.xlsx -h "C3:P4" -v "A6:A58" -p .\.trash\ -n "KSYS" -t 202601 -m
+trim parse .trash\4-JTCBB_CBB05矿山企业制造费用明细表.xlsx -h "C3:R5" -v "A7:A64" -p .\.trash\ -n "KSZZFY" -t 202601 -m
+trim parse .trash\5-JTCBB_CBB07定额材料、动力消耗统计表.xlsx -h "F3:AA4" -v "A6:B52" -p .\.trash\ -n "DEXH" -t 202601 -m
 ```
 
 ## 项目结构

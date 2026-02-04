@@ -384,11 +384,8 @@ def parse_excel_with_axis(
                 # 添加企业ID作为第三列
                 df.insert(0, "企业ID", enterprise_id)
                 
-                # 添加企业简称作为第二列
+                # 添加企业简称作为第一列
                 df.insert(0, "企业简称", short_name)
-                
-                # 添加企业全称作为第一列
-                df.insert(0, "企业全称", company)
                 
                 all_dfs.append(df)
             else:
