@@ -9,6 +9,22 @@ from .excel_reader import ExcelReader
 from .csv_exporter import CSVExporter
 
 
+def remove_all_whitespace(text: str) -> str:
+    """去除所有形式的空白字符，包括空格、制表符、换行符、全角空格等
+    
+    Args:
+        text: 输入字符串
+    
+    Returns:
+        去除所有空白字符后的字符串
+    """
+    # 去除全角空格
+    text = text.replace("　", "")
+    # 去除所有空白字符（空格、制表符、换行符等）
+    text = re.sub(r'\s+', '', text)
+    return text
+
+
 def parse_cell_range(range_str: str) -> Tuple[int, int, int, int]:
     """解析单元格范围字符串，如 "B1:H2"
     
@@ -312,10 +328,12 @@ def parse_excel_with_axis(
                     for row_idx in range(h_start_row, h_end_row + 1):
                         val = _get_merged_cell_value(ws, row_idx, col_idx)
                         if val:
-                            # 数字格式转为int，字符串去除空格后合并
-                            if isinstance(val, (int, float)):
-                                val = int(val)
-                            val = str(val).replace(" ", "")
+                            # 尝试转int（先转float再转int，处理58.0这样的格式）
+                            try:
+                                val = int(float(val))
+                            except (ValueError, TypeError):
+                                pass
+                            val = remove_all_whitespace(str(val))
                             parts.append(val)
                     merged_col_headers.append("_".join(parts) if parts else f"Col_{col_idx}")
             else:
@@ -331,10 +349,12 @@ def parse_excel_with_axis(
                     for col_idx in range(v_start_col, v_end_col + 1):
                         val = _get_merged_cell_value(ws, row_idx, col_idx)
                         if val:
-                            # 数字格式转为int，字符串去除空格后合并
-                            if isinstance(val, (int, float)):
-                                val = int(val)
-                            val = str(val).replace(" ", "")
+                            # 尝试转int（先转float再转int，处理58.0这样的格式）
+                            try:
+                                val = int(float(val))
+                            except (ValueError, TypeError):
+                                pass
+                            val = remove_all_whitespace(str(val))
                             parts.append(val)
                     row_headers.append("_".join(parts) if parts else f"Row_{row_idx}")
             else:
@@ -356,8 +376,12 @@ def parse_excel_with_axis(
                 new_col_headers = []
                 for row_idx in range(num_data_rows):  # 从第一行开始
                     row_header = row_headers[row_idx] if row_headers and row_idx < len(row_headers) else f"Row_{row_idx}"
+                    # 去除所有空白字符
+                    row_header = remove_all_whitespace(str(row_header))
                     for col_idx in range(num_data_cols):  # 从第一列开始
                         col_header = merged_col_headers[col_idx] if col_idx < len(merged_col_headers) else f"Col_{col_idx}"
+                        # 去除所有空白字符
+                        col_header = remove_all_whitespace(str(col_header))
                         new_col_header = f"{row_header}|{col_header}"
                         new_col_headers.append(new_col_header)
                 
