@@ -312,6 +312,10 @@ def parse_excel_with_axis(
                     for row_idx in range(h_start_row, h_end_row + 1):
                         val = _get_merged_cell_value(ws, row_idx, col_idx)
                         if val:
+                            # 数字格式转为int，字符串去除空格后合并
+                            if isinstance(val, (int, float)):
+                                val = int(val)
+                            val = str(val).replace(" ", "")
                             parts.append(val)
                     merged_col_headers.append("_".join(parts) if parts else f"Col_{col_idx}")
             else:
@@ -327,6 +331,10 @@ def parse_excel_with_axis(
                     for col_idx in range(v_start_col, v_end_col + 1):
                         val = _get_merged_cell_value(ws, row_idx, col_idx)
                         if val:
+                            # 数字格式转为int，字符串去除空格后合并
+                            if isinstance(val, (int, float)):
+                                val = int(val)
+                            val = str(val).replace(" ", "")
                             parts.append(val)
                     row_headers.append("_".join(parts) if parts else f"Row_{row_idx}")
             else:
