@@ -398,22 +398,22 @@ def parse_excel_with_axis(
                 # 创建DataFrame
                 df = pd.DataFrame([row_data], columns=new_col_headers)
                 
-                # 添加报表类型作为第六列
+                # 添加数据集作为第五列
+                if name is not None:
+                    df.insert(0, "数据集", name)
+                else:
+                    df.insert(0, "数据集", "")
+
+                # 添加报表类型作为第四列
                 df.insert(0, "报表类型", bracket_content)
                 
-                # 添加会计期间作为第五列
+                # 添加会计期间作为第三列
                 if timestamp is not None:
                     df.insert(0, "会计期间", timestamp)
                 else:
                     df.insert(0, "会计期间", "")
                 
-                # 添加数据集作为第四列
-                if name is not None:
-                    df.insert(0, "数据集", name)
-                else:
-                    df.insert(0, "数据集", "")
-                
-                # 添加企业ID作为第三列
+                # 添加企业ID作为第二列
                 df.insert(0, "企业ID", enterprise_id)
                 
                 # 添加企业简称作为第一列
