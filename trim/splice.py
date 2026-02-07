@@ -238,14 +238,26 @@ def splice_with_headers(
         for i, part in enumerate(key_parts):
             row_list.append(part)
         
+        # 检查所有数据列是否全为空
+        has_data = False
+        data_values = []
+        
         # 每个文件的数据列
         for file_idx in range(len(file_paths)):
             for header in file_headers[file_idx]:
                 if file_idx in file_data:
-                    row_list.append(file_data[file_idx].get(header, ""))
+                    value = file_data[file_idx].get(header, "")
+                    data_values.append(value)
+                    if value and str(value).strip():
+                        has_data = True
                 else:
-                    row_list.append("")
+                    data_values.append("")
         
+        # 如果所有数据列都为空，跳过该行
+        if not has_data:
+            continue
+        
+        row_list.extend(data_values)
         output_data.append(row_list)
     
     df = pd.DataFrame(output_data, columns=output_columns)

@@ -104,13 +104,23 @@ trim parse data.xlsx -h "B1:E2"
 
 
 实际例子
+
+
 ```bash
-trim parse .trash\1-JTCBB_CBB04矿山企业产品综合成本构成表.xlsx -h "D3:U4" -v "A6:C25" -p .\.trash\ -n "CBGC" -t 202601 -m
-trim parse .trash\2-JTCBB_CBB02矿山作业成本项目构成表.xlsx -h "C3:Z4" -v "A6:B61" -p .\.trash\ -n "KSZYGC" -t 202601 -m
-trim parse .trash\3-JTCBB_CBB03矿山成本要素表.xlsx -h "C3:P4" -v "A6:B58" -p .\.trash\ -n "KSYS" -t 202601 -m
-trim parse .trash\4-JTCBB_CBB05矿山企业制造费用明细表.xlsx -h "C3:R5" -v "A7:B64" -p .\.trash\ -n "KSZZFY" -t 202601 -m
-trim parse .trash\5-JTCBB_CBB07定额材料、动力消耗统计表.xlsx -h "D3:AA4" -v "A6:C52" -p .\.trash\ -n "DEXH" -t 202601 -m
+trim parse .trash\JTCBB_CBB02矿山作业成本项目构成表.xlsx -h "C3:Z4" -v "A6:B61" -p .\.trash\ -n "KSZY" -t 202601 -m
+trim parse .trash\JTCBB_CBB03矿山成本要素表.xlsx -h "C3:P4" -v "A6:B58" -p .\.trash\ -n "KSYS" -t 202601 -m
+trim parse .trash\JTCBB_CBB04矿山企业产品综合成本构成表.xlsx -h "D3:U4" -v "A6:C25" -p .\.trash\ -n "KSCP" -t 202601 -m
+trim parse .trash\JTCBB_CBB05矿山企业制造费用明细表.xlsx -h "C3:R5" -v "A7:B64" -p .\.trash\ -n "KSZZ" -t 202601 -m
+trim parse .trash\JTCBB_CBB06外委作业成本表.xlsx -h "D3:U4" -v "A6:C32" -p .\.trash\ -n "WW" -t 202601 -m
+trim parse .trash\JTCBB_CBB07定额材料、动力消耗统计表.xlsx -h "D3:AA4" -v "A6:C52" -p .\.trash\ -n "CLDL" -t 202601 -m
+trim parse .trash\JTCBB_CBB08冶炼企业吨矿加工成本表.xlsx -h "D3:J3" -v "A5:C11" -p .\.trash\ -n "YLDK" -t 202601 -m
+trim parse .trash\JTCBB_CBB09冶炼生产指标表.xlsx -h "D3:J3" -v "A5:C28" -p .\.trash\ -n "YLSC" -t 202601 -m
+trim parse .trash\JTCBB_CBB10冶炼企业产品成本表.xlsx -h "D3:O4" -v "A6:C33" -p .\.trash\ -n "YLCP" -t 202601 -m
+trim parse .trash\JTCBB_CBB11冶炼企业作业成本表.xlsx -h "D3:AI4" -v "A6:C16" -p .\.trash\ -n "YLZY" -t 202601 -m
+trim parse .trash\JTCBB_CBB12乌山堆浸制造费用明细表.xlsx -h "C3:N5" -v "A7:B81" -p .\.trash\ -n "WSDJ" -t 202601 -m
+trim parse .trash\JTCBB_CBB13冶炼成本要素表.xlsx -h "C3:H4" -v "A6:B58" -p .\.trash\ -n "YLYS" -t 202601 -m
 ```
+
 
 ## 项目结构
 
