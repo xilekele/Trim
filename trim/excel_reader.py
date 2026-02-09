@@ -7,6 +7,29 @@ import openpyxl
 import pandas as pd
 
 
+def _process_cell_value(val, strip=True):
+    """处理单元格值，将"-"视为空值
+    
+    Args:
+        val: 原始单元格值
+        strip: 是否去除前后空格
+    
+    Returns:
+        处理后的值，"-"会被转换为None
+    """
+    if val is None:
+        return None
+    
+    # 将"-"视为空值
+    if str(val).strip() == "-":
+        return None
+    
+    if val and strip:
+        val = str(val).strip()
+    
+    return val if val or val == 0 else None
+
+
 class ExcelReader:
     """Excel文件读取器"""
     
@@ -99,7 +122,8 @@ class ExcelReader:
             row_data = []
             for col in range(min_col, max_col + 1):
                 cell = ws.cell(row=row, column=col)
-                row_data.append(cell.value)
+                val = _process_cell_value(cell.value, strip=True)
+                row_data.append(val)
             data.append(row_data)
         
         if not data:
@@ -163,7 +187,8 @@ class ExcelReader:
             row_data = []
             for col in range(start_col, end_col + 1):
                 cell = ws.cell(row=row, column=col)
-                row_data.append(cell.value)
+                val = _process_cell_value(cell.value, strip=True)
+                row_data.append(val)
             data.append(row_data)
         
         columns = merged_headers

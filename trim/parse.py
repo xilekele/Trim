@@ -103,14 +103,35 @@ def _get_merged_cell_value(ws, row: int, col: int, strip=True):
                 # 返回合并区域左上角的单元格值
                 top_left_cell = ws.cell(row=merged_range.min_row, column=merged_range.min_col)
                 val = top_left_cell.value
-                if val and strip:
-                    val = str(val).strip()
+                val = _process_cell_value(val, strip)
                 return val
     
     val = cell.value
+    val = _process_cell_value(val, strip)
+    return val
+
+
+def _process_cell_value(val, strip=True):
+    """处理单元格值，将"-"视为空值
+    
+    Args:
+        val: 原始单元格值
+        strip: 是否去除前后空格
+    
+    Returns:
+        处理后的值，"-"会被转换为None
+    """
+    if val is None:
+        return None
+    
+    # 将"-"视为空值
+    if str(val).strip() == "-":
+        return None
+    
     if val and strip:
         val = str(val).strip()
-    return val
+    
+    return val if val or val == 0 else None
 
 
 # 企业信息映射表（企业全称 -> (企业简称, 企业ID)）
