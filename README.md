@@ -109,7 +109,7 @@ trim parse data.xlsx -h "B1:E2"
 ```bash
 trim parse .trash\快报财务指标表.xlsx -h "A4:B291" -v "C3:G3" -p .\.trash\ -n "KBCW" -t 202601 -m
 trim parse .trash\快报业务指标表.xlsx -h "A4:B180" -v "C3:G3" -p .\.trash\ -n "KBYW" -t 202601 -m
-trim parse .trash\JTCBB_CBB01矿山企业生产技术指标表.xlsx -h "D3:K3" -v "A6:C74" -p .\.trash\ -n "" -t 202601 -m
+trim parse .trash\JTCBB_CBB01矿山企业生产技术指标表.xlsx -h "D3:K3" -v "A6:C74" -p .\.trash\ -n "KSSC" -t 202601 -m
 trim parse .trash\JTCBB_CBB02矿山作业成本项目构成表.xlsx -h "C3:Z4" -v "A6:B61" -p .\.trash\ -n "KSZY" -t 202601 -m
 trim parse .trash\JTCBB_CBB03矿山成本要素表.xlsx -h "C3:P4" -v "A6:B58" -p .\.trash\ -n "KSYS" -t 202601 -m
 trim parse .trash\JTCBB_CBB04矿山企业产品综合成本构成表.xlsx -h "D3:U4" -v "A6:C25" -p .\.trash\ -n "KSCP" -t 202601 -m
@@ -120,7 +120,6 @@ trim parse .trash\JTCBB_CBB08冶炼企业吨矿加工成本表.xlsx -h "D3:J3" -
 trim parse .trash\JTCBB_CBB09冶炼生产指标表.xlsx -h "D3:J3" -v "A5:C28" -p .\.trash\ -n "YLSC" -t 202601 -m
 trim parse .trash\JTCBB_CBB10冶炼企业产品成本表.xlsx -h "D3:O4" -v "A6:C33" -p .\.trash\ -n "YLCP" -t 202601 -m
 trim parse .trash\JTCBB_CBB11冶炼企业作业成本表.xlsx -h "D3:AI4" -v "A6:C16" -p .\.trash\ -n "YLZY" -t 202601 -m
-trim parse .trash\JTCBB_CBB12乌山堆浸制造费用明细表.xlsx -h "C3:N5" -v "A7:B81" -p .\.trash\ -n "WSDJ" -t 202601 -m
 trim parse .trash\JTCBB_CBB13冶炼成本要素表.xlsx -h "C3:H4" -v "A6:B58" -p .\.trash\ -n "YLYS" -t 202601 -m
 ```
 
